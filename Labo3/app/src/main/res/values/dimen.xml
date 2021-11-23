@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <dimen name="app_def_margin">16dp</dimen>
+    <dimen name="app_def_separation">12dp</dimen>
+
+    <dimen name="app_vertical_margin">@dimen/app_def_margin</dimen>
+    <dimen name="app_horizontal_margin">@dimen/app_def_margin</dimen>
+
+    <dimen name="app_vertical_separation">@dimen/app_def_separation</dimen>
+    <dimen name="app_horizontal_separation">@dimen/app_def_separation</dimen>
+
+</resources>
