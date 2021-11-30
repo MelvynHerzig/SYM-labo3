@@ -6,4 +6,60 @@
     android:layout_height="match_parent"
     tools:context=".manipulations.CodeBarreActivity">
 
+    <LinearLayout
+        android:id="@+id/main_linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerHorizontal="true"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.journeyapps.barcodescanner.DecoratedBarcodeView
+            android:id="@+id/code_barre_scanner"
+            android:layout_margin="@dimen/app_def_margin"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight=".40"
+            app:zxing_use_texture_view="false"
+            app:zxing_preview_scaling_strategy="centerCrop"/>
+
+        <ImageView
+            android:layout_margin="@dimen/app_def_margin"
+            android:id="@+id/code_barre_image"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight=".30"
+            android:text="placeholder"/>
+
+        <LinearLayout
+            android:id="@+id/main_linearLayout_result"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight=".30"
+            android:layout_centerHorizontal="true"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_marginHorizontal="@dimen/app_def_margin"
+                android:layout_marginTop="@dimen/app_def_margin"
+                android:id="@+id/code_barre_result_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/code_barre_result_title"/>
+
+            <TextView
+                android:layout_marginHorizontal="@dimen/app_def_margin"
+                android:id="@+id/code_barre_result_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/code_barre_result_content"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

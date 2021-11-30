@@ -3,4 +3,6 @@
     <string name="btn_nfc">NFC</string>
     <string name="btn_beacon">beacon</string>
     <string name="btn_codeBarre">code barre</string>
+    <string name="code_barre_result_title"><u><b>Code barre value:</b></u></string>
+    <string name="code_barre_result_content">No code barre decoded yet</string>
 </resources>
