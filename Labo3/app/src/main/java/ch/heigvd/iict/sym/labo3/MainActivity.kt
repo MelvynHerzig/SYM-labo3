@@ -66,7 +66,8 @@ class MainActivity : AppCompatActivity() {
         }
 
         codeBarreButton.setOnClickListener{
-            checkPermission(Manifest.permission.CAMERA, MainActivity.CAMERA_PERMISSION_CODE)
+            // Check for permissions, if acquired, starts CodeBarreActivity
+            checkPermission(Manifest.permission.CAMERA, CAMERA_PERMISSION_CODE)
         }
     }
 
@@ -75,10 +76,12 @@ class MainActivity : AppCompatActivity() {
      * Source: https://www.geeksforgeeks.org/android-how-to-request-permissions-in-android-application/
      */
     private fun checkPermission(permission: String, requestCode: Int) {
-        if (ContextCompat.checkSelfPermission(this@MainActivity, permission) == PackageManager.PERMISSION_DENIED) {
+        if (ContextCompat.checkSelfPermission(
+                this@MainActivity, permission) == PackageManager.PERMISSION_DENIED) {
 
             // Requesting the permission
-            ActivityCompat.requestPermissions(this@MainActivity, arrayOf(permission), requestCode)
+            ActivityCompat.requestPermissions(this@MainActivity,
+                                              arrayOf(permission), requestCode)
         } else {
             if(requestCode == CAMERA_PERMISSION_CODE) {
                 startActivity(Intent(this, CodeBarreActivity::class.java))
@@ -97,10 +100,8 @@ class MainActivity : AppCompatActivity() {
 
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == CAMERA_PERMISSION_CODE) {
-            if (requestCode == CAMERA_PERMISSION_CODE) {
-                if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    startActivity(Intent(this, CodeBarreActivity::class.java))
-                }
+            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                startActivity(Intent(this, CodeBarreActivity::class.java))
             }
         }
     }
