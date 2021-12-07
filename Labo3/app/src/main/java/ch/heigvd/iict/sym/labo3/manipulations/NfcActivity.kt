@@ -36,6 +36,8 @@ class NfcActivity : AppCompatActivity() {
     private lateinit var textView3: TextView
     private lateinit var textView4: TextView
 
+    private lateinit var lstTextView: List<TextView>
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_nfc)
@@ -45,7 +47,7 @@ class NfcActivity : AppCompatActivity() {
         textView3 = findViewById(R.id.nfc_text_3)
         textView4 = findViewById(R.id.nfc_text_4)
 
-
+        lstTextView = listOf(textView1, textView2, textView3, textView4)
 
         mNfcAdapter = NfcAdapter.getDefaultAdapter(this)
 
@@ -58,15 +60,18 @@ class NfcActivity : AppCompatActivity() {
         }
 
         if (!mNfcAdapter.isEnabled()) {
-            textView1.setText(R.string.nfc_disabled)
-            textView2.setText(R.string.nfc_disabled)
-            textView3.setText(R.string.nfc_disabled)
-            textView4.setText(R.string.nfc_disabled)
+            setAllTextViewText(R.string.nfc_disabled.toString())
         }
 
 
 
         handleIntent(intent);
+    }
+
+    override fun onNewIntent(intent: Intent?) {
+        super.onNewIntent(intent)
+        if (intent != null)
+            handleIntent(intent)
     }
 
     private fun handleIntent(intent: Intent) {
@@ -75,14 +80,8 @@ class NfcActivity : AppCompatActivity() {
             val type = intent.type
             if (MIME_TEXT_PLAIN == type) {
                 val tag: Tag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG)!!
+                launchCoroutine(tag)
 
-                runBlocking {
-                    launch {
-                        val result = NfcReaderCoroutine().execute(tag)
-
-                        textView1.text = result.getOrNull()
-                    }
-                }
             } else {
                 Log.d("NfcActivity", "Wrong mime type: $type")
             }
@@ -94,14 +93,7 @@ class NfcActivity : AppCompatActivity() {
             val searchedTech = Ndef::class.java.name
             for (tech in techList) {
                 if (searchedTech == tech) {
-                    runBlocking {
-                        launch {
-                            val result = NfcReaderCoroutine().execute(tag)
-
-                            textView1.text = result.getOrNull()
-                        }
-                    }
-
+                    launchCoroutine(tag)
                     break
                 }
             }
@@ -113,8 +105,26 @@ class NfcActivity : AppCompatActivity() {
         setupForegroundDispatch(this, mNfcAdapter)
     }
 
+    private fun setAllTextViewText(text : String){
+        for(textview in lstTextView){
+            textview.text = text
+        }
+    }
+
+    private fun launchCoroutine(tag: Tag) {
+        runBlocking {
+            launch {
+                val result = NfcReaderCoroutine().execute(tag).getOrDefault(listOf())
+
+                for (i in result.indices) {
+                    lstTextView[i].text = result[i]
+                }
+            }
+        }
+    }
+
     companion object {
-        val MIME_TEXT_PLAIN: String = "text/plain"
+        const val MIME_TEXT_PLAIN: String = "text/plain"
 
         fun setupForegroundDispatch(activity: AppCompatActivity, adapter: NfcAdapter) {
             val intent = Intent(activity.applicationContext, activity::class.java)

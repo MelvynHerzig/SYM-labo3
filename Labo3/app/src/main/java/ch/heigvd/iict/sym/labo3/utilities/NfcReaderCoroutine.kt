@@ -12,14 +12,14 @@ import java.lang.RuntimeException
 import java.util.*
 
 class NfcReaderCoroutine {
-    suspend fun execute(tag: Tag) : Result<String>{
+    suspend fun execute(tag: Tag) : Result<List<String>>{
 
         return withContext(Dispatchers.IO) {
             val ndef = Ndef.get(tag)?: return@withContext Result.failure(RuntimeException("NDEF is not supported by this Tag."))
             val ndefMessage = ndef.cachedNdefMessage
             val records = ndefMessage.records
 
-            var result = "Waiting for nfc..."
+            var results = mutableListOf<String>()
 
             for (ndefRecord in records) {
                 if (ndefRecord.tnf == NdefRecord.TNF_WELL_KNOWN && Arrays.equals(
@@ -28,14 +28,14 @@ class NfcReaderCoroutine {
                     )
                 ) {
                     try {
-                        return@withContext Result.success(readText(ndefRecord))
+                        results.add(readText(ndefRecord))
                     } catch (e: UnsupportedEncodingException) {
                         Log.e("NdefReaderTask", "Unsupported Encoding", e)
                     }
                 }
             }
 
-            return@withContext Result.failure(RuntimeException("Failed"))
+            return@withContext Result.success(results)
         }
     }
 
