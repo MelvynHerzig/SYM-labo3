@@ -3,4 +3,7 @@
     <string name="btn_nfc">NFC</string>
     <string name="btn_beacon">beacon</string>
     <string name="btn_codeBarre">code barre</string>
+    <string name="waiting_nfc">Waiting for NFC scan</string>
+    <string name="nfc_disabled">NFC is disabled.</string>
+    <string name="nfc_not_supported">This device doesn\'t support NFC.</string>
 </resources>
