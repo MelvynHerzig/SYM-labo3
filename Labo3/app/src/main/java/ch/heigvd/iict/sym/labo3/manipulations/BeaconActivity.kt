@@ -8,6 +8,10 @@ import android.os.Bundle
 import ch.heigvd.iict.sym.labo3.R
 import android.content.pm.PackageManager
 import android.util.Log
+import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.RecyclerView
+import ch.heigvd.iict.sym.labo3.beacon.utils.BeaconAdapter
+import org.altbeacon.beacon.*
 
 /**
  * Activité implémentant la manipulation lié à l'utilisation du iBeacon
@@ -15,18 +19,38 @@ import android.util.Log
  * @author Forestier Quentin
  * @author Herzig Melvyn
  */
-class BeaconActivity : AppCompatActivity() {
+class BeaconActivity : AppCompatActivity(), BeaconConsumer {
 
     companion object {
         private const val PERMISSION_REQUEST_FINE_LOCATION = 1
         private const val PERMISSION_REQUEST_BACKGROUND_LOCATION = 2
+        private const val BEACON_FORMAT = "m:2-3=0215,i:4-19,i:20-21,i:22-23,p:24-24"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_beacon)
 
+        // Setup the recycle view
+        val recyclerView = findViewById<RecyclerView>(R.id.recyclerview)
+        val beaconAdapter = BeaconAdapter()
+        beaconAdapter.fakePopulate()
+        recyclerView.adapter = beaconAdapter
+
         checkLocalPermission()
+
+        val beaconManager = BeaconManager.getInstanceForApplication(this)
+        beaconManager.beaconParsers.add(BeaconParser().setBeaconLayout(BEACON_FORMAT))
+        beaconManager.bind(this)
+    }
+
+    override fun onBeaconServiceConnect() {
+        /*val rangingObserver = Observer<Collection<Beacon>> { beacons ->
+            Log.d(TAG, "Ranged: ${beacons.count()} beacons")
+            for (beacon: Beacon in beacons) {
+                Log.d(TAG, "$beacon about ${beacon.distance} meters away")
+            }
+        }*/
     }
 
     /**
