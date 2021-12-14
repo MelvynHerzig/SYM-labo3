@@ -4,7 +4,14 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/Melvyn/Desktop/Cours/Drive/HEIG_VD/5em_semestre/SYM/Labo3/app/src/main/res/layout/activity_main.xml" value="0.1" />
-        <entry key="..\:/Users/Melvyn/Desktop/Cours/Drive/HEIG_VD/5em_semestre/SYM/SYM-labo3/Labo3/app/src/main/res/layout/activity_code_barre.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/alecb/Google Drive/Semestre 5/SYM/Labos/Labo 3/SYM-labo3/Labo3/app/src/main/res/layout/activity_beacon.xml" value="0.21" />
+        <entry key="..\:/Users/alecb/Google Drive/Semestre 5/SYM/Labos/Labo 3/SYM-labo3/Labo3/app/src/main/res/layout/activity_main.xml" value="0.6844106463878327" />
+        <entry key="..\:/Users/alecb/Google Drive/Semestre 5/SYM/Labos/Labo 3/SYM-labo3/Labo3/app/src/main/res/layout/activity_nfc.xml" value="0.2" />
+        <entry key="..\:/Users/alecb/Google Drive/Semestre 5/SYM/Labos/Labo 3/SYM-labo3/Labo3/app/src/main/res/layout/beacon_view_design.xml" value="0.18" />
+        <entry key="..\:/Users/alecb/Google Drive/Semestre 5/SYM/Labos/Labo 3/SYM-labo3/Labo3/app/src/main/res/layout/beacon_view_design2.xml" value="0.18213058419243985" />
+        <entry key="..\:/Users/alecb/Google Drive/Semestre 5/SYM/Labos/Labo 3/SYM-labo3/Labo3/app/src/main/res/layout/beacon_view_design3.xml" value="0.22" />
+        <entry key="..\:/Users/alecb/Google Drive/Semestre 5/SYM/Labos/Labo 3/SYM-labo3/Labo3/app/src/main/res/layout/teo.xml" value="0.5" />
+        <entry key="..\:/Users/alecb/Google Drive/Semestre 5/SYM/Labos/Labo 3/SYM-labo3/Labo3/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.10989583333333333" />
       </map>
     </option>
   </component>
