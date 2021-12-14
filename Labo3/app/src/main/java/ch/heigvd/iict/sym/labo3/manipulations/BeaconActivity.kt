@@ -1,5 +1,6 @@
 package ch.heigvd.iict.sym.labo3.manipulations
 
+import android.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import ch.heigvd.iict.sym.labo3.R
@@ -28,6 +29,15 @@ class BeaconActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_beacon)
+
+        // Pop-up de prévention
+        val builder: AlertDialog.Builder = AlertDialog.Builder(this)
+        builder.setTitle("Besoins de l'application")
+        builder.setMessage("Pensez à activer le bluetooth, à vérifier votre accès internet " +
+                "et à avoir la localisation activée pour utiliser cette partie de l'application!")
+        builder.setPositiveButton(android.R.string.ok, null)
+        builder.setOnDismissListener { }
+        builder.show()
 
         // Setup la RecycleView
         val recyclerView = findViewById<RecyclerView>(R.id.recyclerview)
