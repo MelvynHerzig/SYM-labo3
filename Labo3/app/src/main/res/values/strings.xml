@@ -15,4 +15,6 @@
     <string name="nfc_auth_max">Auth level max</string>
     <string name="nfc_auth_medium">Auth level medium</string>
     <string name="nfc_auth_min">Auth level min</string>
+    <string name="code_barre_result_title"><u><b>Code barre value:</b></u></string>
+    <string name="code_barre_result_content">No code barre decoded yet</string>
 </resources>
