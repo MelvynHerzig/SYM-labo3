@@ -1,93 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView
+<androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="50dp"
-    android:layout_margin="10dp"
-    app:cardElevation="6dp">
+    android:layout_height="80dp">
 
-    <LinearLayout
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/UUIDTitle"
+        android:layout_width="50dp"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:padding="5dp">
+        android:text="UUID: "
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <ImageView
-            android:id="@+id/icon"
-            android:layout_width="40dp"
-            android:layout_height="40dp" />
+    <TextView
+        android:id="@+id/UUID"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="UUID"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/UUIDTitle"
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/RSSITitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginLeft="15dp"
-            android:text="RSSI: "
-            android:textSize="20sp"
-            android:textStyle="bold" />
+    <TextView
+        android:id="@+id/Major"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:text="Majeur :"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/UUID" />
 
-        <TextView
-            android:id="@+id/RSSI"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginLeft="15dp"
-            android:text=""
-            android:textSize="20sp"
-            android:textStyle="bold" />
+    <TextView
+        android:id="@+id/Minor"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Mineur: "
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/Major"
+        app:layout_constraintTop_toBottomOf="@+id/UUID" />
 
-        <TextView
-            android:id="@+id/UUID"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginLeft="15dp"
-            android:text="UUID: "
-            android:textSize="20sp"
-            android:textStyle="bold" />
+    <TextView
+        android:id="@+id/RSSI"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:text="RSSI: "
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Major" />
 
-        <TextView
-            android:id="@+id/UUIDTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginLeft="15dp"
-            android:text=""
-            android:textSize="20sp"
-            android:textStyle="bold" />
+    <TextView
+        android:id="@+id/Detection"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Dernière détection: "
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/RSSI"
+        app:layout_constraintTop_toBottomOf="@+id/Minor"/>
 
-        <TextView
-            android:id="@+id/majeurMineurTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginLeft="15dp"
-            android:text="majeur - mineur"
-            android:textSize="20sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/majeurMineur"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginLeft="15dp"
-            android:text=""
-            android:textSize="20sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/distance"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginLeft="15dp"
-            android:text=""
-            android:textSize="20sp"
-            android:textStyle="bold" />
-
-    </LinearLayout>
-
-</androidx.cardview.widget.CardView>
+</androidx.constraintlayout.widget.ConstraintLayout>

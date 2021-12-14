@@ -4,29 +4,24 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import ch.heigvd.iict.sym.labo3.R
+import org.altbeacon.beacon.Beacon;
+import java.sql.Timestamp
+import java.util.*
 import kotlin.collections.ArrayList
 
 /**
- * Adapteur
+ * Adapteur utilisant une RecycleView pour afficher les Beacons
  * @author Berney Alec
  * @author Forestier Quentin
  * @author Herzig Melvyn
  */
-class BeaconAdapter : RecyclerView.Adapter<BeaconAdapter.ViewHolder>() {
-
-    private var beacons = ArrayList<Beacon>()
+data class BeaconAdapter(val beacons : ArrayList<Beacon>)
+    : RecyclerView.Adapter<BeaconAdapter.ViewHolder>() {
 
     override fun getItemCount(): Int {
         return beacons.size
-    }
-
-    fun fakePopulate() {
-        for (i in 1..20) {
-            beacons.add(Beacon("a", i, i, "b", i.toDouble()))
-        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -36,26 +31,35 @@ class BeaconAdapter : RecyclerView.Adapter<BeaconAdapter.ViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bindValues(beacons[position])
+        bindValues(beacons[position], holder)
     }
 
     /**
-     * Object used to store items GUI elements references
+     * Récupère les éléments de la vue qui seront utilisés pour y mettre les valeurs des beacons
      */
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        val uuid: TextView = itemView.findViewById(R.id.UUID)
+        val major: TextView = itemView.findViewById(R.id.Major)
+        val minor: TextView = itemView.findViewById(R.id.Minor)
+        val rssi: TextView = itemView.findViewById(R.id.RSSI)
+        val detection: TextView = itemView.findViewById(R.id.Detection)
+    }
 
-        //private val icon: ImageView = itemView.findViewById(R.id.icon)
-        private val uuid: TextView = itemView.findViewById(R.id.UUID)
-        private val majeurmineur: TextView = itemView.findViewById(R.id.majeurMineur)
-        private val distance: TextView = itemView.findViewById(R.id.distance)
-        private val rssi: TextView = itemView.findViewById(R.id.RSSI)
+    /**
+     * Permet de bind les valeurs d'un objet de la vue avec celle d'un Beacon
+     */
+    private fun bindValues(beacon : Beacon, holder : ViewHolder) {
+        holder.uuid.text = beacon.id1.toString()
+        holder.minor.text = "Mineur: ${beacon.id2}"
+        holder.major.text = "Majeur: ${beacon.id3}"
+        holder.rssi.text = "RSSI: ${beacon.rssi}"
+        holder.detection.text = "Dernière détection: ${getDate(beacon.lastCycleDetectionTimestamp)}"
+    }
 
-        fun bindValues(beacon : Beacon) {
-            //icon.setImageResource()
-            uuid.text = beacon.UUID
-            majeurmineur.text = "${beacon.major} - ${beacon.minor}"
-            distance.text = "${beacon.distance}"
-            rssi.text = beacon.RSSI
-        }
+    /**
+     * Permet de récupérer la date au format yyyy-mm-dd hh:mm:ss
+     */
+    private fun getDate(timestamp: Long) : Date {
+        return Timestamp(timestamp)
     }
 }
