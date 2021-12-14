@@ -6,4 +6,98 @@
     android:layout_height="match_parent"
     tools:context=".manipulations.NfcActivity">
 
+    <LinearLayout
+        android:id="@+id/nfc_linearLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/nfc_email_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/nfc_email_hint" />
+
+        <EditText
+            android:id="@+id/nfc_email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/nfc_email_hint"
+            android:inputType="textEmailAddress" />
+
+        <TextView
+            android:id="@+id/nfc_password_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/app_vertical_separation"
+            android:text="@string/nfc_password_hint" />
+
+        <EditText
+            android:id="@+id/nfc_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/nfc_password_hint"
+            android:inputType="textPassword" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/app_vertical_separation"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/nfc_cancel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/nfc_cancel_btn" />
+
+            <Button
+                android:id="@+id/nfc_validate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/app_horizontal_separation"
+                android:text="@string/nfc_validate_btn" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/nfc_text"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:text="@string/waiting_nfc" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/app_vertical_separation"
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/nfc_btn_auth_max"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/nfc_auth_max" />
+
+            <Button
+                android:id="@+id/nfc_btn_auth_medium"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/nfc_auth_medium" />
+
+            <Button
+                android:id="@+id/nfc_btn_auth_min"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/nfc_auth_min" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
