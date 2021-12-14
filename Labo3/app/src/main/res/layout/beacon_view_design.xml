@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="80dp">
+
+    <TextView
+        android:id="@+id/UUIDTitle"
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:text="UUID: "
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/UUID"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="UUID"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/UUIDTitle"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/Major"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:text="Majeur :"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/UUID" />
+
+    <TextView
+        android:id="@+id/Minor"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Mineur: "
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/Major"
+        app:layout_constraintTop_toBottomOf="@+id/UUID" />
+
+    <TextView
+        android:id="@+id/RSSI"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:text="RSSI: "
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Major" />
+
+    <TextView
+        android:id="@+id/Detection"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Dernière détection: "
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/RSSI"
+        app:layout_constraintTop_toBottomOf="@+id/Minor"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
