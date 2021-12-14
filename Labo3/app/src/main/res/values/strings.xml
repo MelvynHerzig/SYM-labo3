@@ -6,4 +6,13 @@
     <string name="waiting_nfc">Waiting for NFC scan</string>
     <string name="nfc_disabled">NFC is disabled.</string>
     <string name="nfc_not_supported">This device doesn\'t support NFC.</string>
+    <string name="nfc_validate_btn">Validate</string>
+    <string name="nfc_cancel_btn">Cancel</string>
+    <string name="nfc_password_hint">Password</string>
+    <string name="nfc_email_hint">Email</string>
+    <string name="nfc_mandatory_field">Required field</string>
+    <string name="nfc_logged_required">Please login first</string>
+    <string name="nfc_auth_max">Auth level max</string>
+    <string name="nfc_auth_medium">Auth level medium</string>
+    <string name="nfc_auth_min">Auth level min</string>
 </resources>
