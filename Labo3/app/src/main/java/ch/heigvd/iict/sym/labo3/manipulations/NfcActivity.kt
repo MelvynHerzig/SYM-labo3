@@ -17,10 +17,9 @@ import android.os.CountDownTimer
 import android.util.Log
 import android.view.View
 import android.widget.*
-import ch.heigvd.iict.sym.labo3.utilities.NfcReaderCoroutine
+import ch.heigvd.iict.sym.labo3.nfc.utils.NfcReaderCoroutine
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 import java.util.*
 
 
@@ -57,20 +56,30 @@ class NfcActivity : AppCompatActivity() {
         override fun onTick(millisUntilFinished: Long) {
             countdown--
 
-            if(MAX_LOGGED_TIME - TIME_IN_MAX_LEVEL == countdown){
-                Toast.makeText(applicationContext, "Losing MAX level auth", Toast.LENGTH_SHORT).show()
+            if (MAX_LOGGED_TIME - TIME_IN_MAX_LEVEL == countdown) {
+                Toast.makeText(applicationContext, "Losing MAX level auth", Toast.LENGTH_SHORT)
+                    .show()
             }
-            if(MAX_LOGGED_TIME - TIME_IN_MEDIUM_LEVEL == countdown){
-                Toast.makeText(applicationContext, "Losing MEDIUM level auth", Toast.LENGTH_SHORT).show()
+            if (MAX_LOGGED_TIME - TIME_IN_MEDIUM_LEVEL == countdown) {
+                Toast.makeText(applicationContext, "Losing MEDIUM level auth", Toast.LENGTH_SHORT)
+                    .show()
             }
-            if(MAX_LOGGED_TIME - TIME_IN_MIN_LEVEL == countdown){
-                Toast.makeText(applicationContext, "Losing MIN level auth", Toast.LENGTH_SHORT).show()
+            if (MAX_LOGGED_TIME - TIME_IN_MIN_LEVEL == countdown) {
+                Toast.makeText(applicationContext, "Losing MIN level auth", Toast.LENGTH_SHORT)
+                    .show()
             }
         }
 
         override fun onFinish() {
             tagOk = false
             logged = false
+            setVisibilityAuthButtons(View.INVISIBLE)
+            textView.visibility = View.INVISIBLE
+            Toast.makeText(
+                applicationContext,
+                "Session ended. Please relog yourself",
+                Toast.LENGTH_SHORT
+            ).show()
         }
     }
 
@@ -107,17 +116,13 @@ class NfcActivity : AppCompatActivity() {
             val passwordInput = password.text?.toString()
 
             if (emailInput.isNullOrEmpty() or passwordInput.isNullOrEmpty()) {
-                // on affiche un message dans les logs de l'application
                 Log.d(TAG, "Au moins un des deux champs est vide")
-                // on affiche un message d'erreur sur les champs qui n'ont pas été renseignés
-                // la méthode getString permet de charger un String depuis les ressources de
-                // l'application à partir de son id
+
                 if (emailInput.isNullOrEmpty())
                     email.error = getString(R.string.nfc_mandatory_field)
                 if (passwordInput.isNullOrEmpty())
                     password.error = getString(R.string.nfc_mandatory_field)
-                // Pour les fonctions lambda, on doit préciser à quelle fonction l'appel à return
-                // doit être appliqué
+
                 return@setOnClickListener
             }
 
@@ -129,32 +134,24 @@ class NfcActivity : AppCompatActivity() {
             }
         }
 
-        btnAuthMax.setOnClickListener{
+        btnAuthMax.setOnClickListener {
             checkAuthorization(TIME_IN_MAX_LEVEL, "MAX")
         }
 
-        btnAuthMedium.setOnClickListener{
+        btnAuthMedium.setOnClickListener {
             checkAuthorization(TIME_IN_MEDIUM_LEVEL, "MEDIUM")
         }
 
-        btnAuthMin.setOnClickListener{
+        btnAuthMin.setOnClickListener {
             checkAuthorization(TIME_IN_MIN_LEVEL, "MIN")
         }
 
         mNfcAdapter = NfcAdapter.getDefaultAdapter(this)
 
-        if (mNfcAdapter == null) {
-            // Stop here, we definitely need NFC
-            Toast.makeText(this, R.string.nfc_not_supported, Toast.LENGTH_LONG).show();
-            finish()
-            return
-
-        }
-
         if (!mNfcAdapter.isEnabled) {
             Toast.makeText(this, R.string.nfc_disabled, Toast.LENGTH_LONG).show();
         }
-        handleIntent(intent);
+        handleIntent(intent)
     }
 
     override fun onNewIntent(intent: Intent?) {
@@ -166,6 +163,9 @@ class NfcActivity : AppCompatActivity() {
         }
     }
 
+    /** Launch coroutine if intent concern NFC
+     * @param intent to handle
+     */
     private fun handleIntent(intent: Intent) {
         val action = intent.action
         if (NfcAdapter.ACTION_NDEF_DISCOVERED == action) {
@@ -173,21 +173,8 @@ class NfcActivity : AppCompatActivity() {
             if (MIME_TEXT_PLAIN == type) {
                 val tag: Tag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG)!!
                 launchCoroutine(tag)
-
             } else {
                 Log.d("NfcActivity", "Wrong mime type: $type")
-            }
-        } else if (NfcAdapter.ACTION_TECH_DISCOVERED == action) {
-
-            // In case we would still use the Tech Discovered Intent
-            val tag: Tag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG)!!
-            val techList: Array<String> = tag.techList
-            val searchedTech = Ndef::class.java.name
-            for (tech in techList) {
-                if (searchedTech == tech) {
-                    launchCoroutine(tag)
-                    break
-                }
             }
         }
     }
@@ -197,6 +184,16 @@ class NfcActivity : AppCompatActivity() {
         setupForegroundDispatch(this, mNfcAdapter)
     }
 
+    override fun onPause() {
+        super.onPause()
+        stopForegorundDispatch(this, mNfcAdapter)
+    }
+
+    /**
+     * Show if access is granted or not
+     * @param timeLimit time limit in specified sector
+     * @param authLevel Authentification level name (Example : MIN, MEDIUM, MAX)
+     */
     private fun checkAuthorization(timeLimit: Int, authLevel: String) {
         if (MAX_LOGGED_TIME - timeLimit < countdown) {
             textView.text = "Auth $authLevel granted"
@@ -205,12 +202,20 @@ class NfcActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * Set all buttons in the "securised zone" to specified visibility
+     * @param visiblity Visibility wanted
+     */
     private fun setVisibilityAuthButtons(visiblity: Int) {
         btnAuthMin.visibility = visiblity
         btnAuthMedium.visibility = visiblity
         btnAuthMax.visibility = visiblity
     }
 
+    /**
+     * Launch the recuperation of tag data in another coroutine
+     * @param tag Source of data to retrieve
+     */
     private fun launchCoroutine(tag: Tag) {
         GlobalScope.launch {
             val result = NfcReaderCoroutine().execute(tag).getOrDefault(listOf())
@@ -255,7 +260,6 @@ class NfcActivity : AppCompatActivity() {
             val filters = arrayOfNulls<IntentFilter>(1)
             val techList = arrayOf<Array<String>>()
 
-            // Notice that this is the same filter as in our manifest.
 
             // Notice that this is the same filter as in our manifest.
             filters[0] = IntentFilter()

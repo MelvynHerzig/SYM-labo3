@@ -1,10 +1,9 @@
-package ch.heigvd.iict.sym.labo3.utilities
+package ch.heigvd.iict.sym.labo3.nfc.utils
 
 import android.nfc.NdefRecord
 import android.nfc.Tag
 import android.nfc.tech.Ndef
 import android.util.Log
-import ch.heigvd.iict.sym.labo3.R
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.io.UnsupportedEncodingException
@@ -12,6 +11,13 @@ import java.lang.RuntimeException
 import java.util.*
 
 class NfcReaderCoroutine {
+
+    /**
+     * Read data from the NFC tag in parameter in IO context
+     * Based on https://code.tutsplus.com/tutorials/reading-nfc-tags-with-android--mobile-17278
+     * @param tag Source of data
+     * @return A result that contain the list of all data as string
+     */
     suspend fun execute(tag: Tag) : Result<List<String>>{
 
         return withContext(Dispatchers.IO) {
@@ -39,6 +45,12 @@ class NfcReaderCoroutine {
         }
     }
 
+    /**
+     * Read the data from NFC record
+     * From https://code.tutsplus.com/tutorials/reading-nfc-tags-with-android--mobile-17278
+     * @param record NFC record
+     * @return Data read
+     */
     private fun readText(record: NdefRecord): String {
         /*
          * See NFC forum specification for "Text Record Type Definition" at 3.2.1
