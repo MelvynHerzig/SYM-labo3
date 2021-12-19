@@ -10,6 +10,12 @@ import java.io.UnsupportedEncodingException
 import java.lang.RuntimeException
 import java.util.*
 
+/**
+ * Coroutine lisant les tag NFC NDEF
+ * @author Berney Alec
+ * @author Forestier Quentin
+ * @author Herzig Melvyn
+ */
 class NfcReaderCoroutine {
 
     /**
